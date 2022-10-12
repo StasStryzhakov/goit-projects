@@ -1,0 +1,151 @@
+//how to get current month days with date in python?    
+# import calendar
+# import datetime
+# now = datetime.datetime.now()
+# year = now.year
+# month = now.month
+# num_days = calendar.monthrange(year, month)[1]
+# days = [datetime.date(year, month, day).strftime("%Y-%m-%d") for day in range(1, num_days + 1)] 
+# print(days)
+
+
+
+
+   
+# str_list = filter(None, str_list)
+# str_list = filter(bool, str_list)
+# str_list = filter(len, str_list)
+# str_list = filter(lambda item: item, str_list)
+
+
+# str_list = list(filter(None, str_list))
+
+
+
+# import os
+# import shutil
+
+# os.rename("path/to/current/file.foo", "path/to/new/destination/for/file.foo")
+# os.replace("path/to/current/file.foo", "path/to/new/destination/for/file.foo")
+# shutil.move("path/to/current/file.foo", "path/to/new/destination/for/file.foo")
+
+
+
+# Scandir:           0.977
+# Walk:              3.011
+# Listdir (filter): 31.288
+# Pathlib:          34.075
+# Listdir:          35.501
+# Glob:             36.277
+
+
+# import os
+# import pathlib
+# import timeit
+# import glob
+
+# path = r"<example_path>"
+
+
+
+# def a():
+#     list_subfolders_with_paths = [f.path for f in os.scandir(path) if f.is_dir()]
+#     # print(len(list_subfolders_with_paths))
+
+
+# def b():
+#     list_subfolders_with_paths = [os.path.join(path, f) for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
+#     # print(len(list_subfolders_with_paths))
+
+
+# def c():
+#     list_subfolders_with_paths = []
+#     for root, dirs, files in os.walk(path):
+#         for dir in dirs:
+#             list_subfolders_with_paths.append( os.path.join(root, dir) )
+#         break
+#     # print(len(list_subfolders_with_paths))
+
+
+# def d():
+#     list_subfolders_with_paths = glob.glob(path + '/*/')
+#     # print(len(list_subfolders_with_paths))
+
+
+# def e():
+#     list_subfolders_with_paths = list(filter(os.path.isdir, [os.path.join(path, f) for f in os.listdir(path)]))
+#     # print(len(list(list_subfolders_with_paths)))
+
+
+# def f():
+#     p = pathlib.Path(path)
+#     list_subfolders_with_paths = [x for x in p.iterdir() if x.is_dir()]
+#     # print(len(list_subfolders_with_paths))
+
+
+
+# print(f"Scandir:          {timeit.timeit(a, number=1000):.3f}")
+# print(f"Listdir:          {timeit.timeit(b, number=1000):.3f}")
+# print(f"Walk:             {timeit.timeit(c, number=1000):.3f}")
+# print(f"Glob:             {timeit.timeit(d, number=1000):.3f}")
+# print(f"Listdir (filter): {timeit.timeit(e, number=1000):.3f}")
+# print(f"Pathlib:          {timeit.timeit(f, number=1000):.3f}")
+
+
+
+# >>> import os
+# >>> os.path.isdir('new_folder')
+# True
+
+
+# >>> import os
+# >>> os.path.exists(os.path.join(os.getcwd(), 'new_folder', 'file.txt'))
+# False
+
+
+#  >>> from pathlib import Path
+#  >>> Path('new_folder').is_dir()
+#  True
+#  >>> (Path.cwd() / 'new_folder' / 'file.txt').exists()
+#  False
+
+
+
+# import os
+
+# file_list = os.listdir("~/home")
+
+
+# #grab last 4 characters of the file name:
+# def last_4chars(x):
+#     return(x[-4:])
+
+# sorted(file_list, key = last_4chars)   
+
+
+# In [4]: sorted(file_list, key = last_4chars)
+# Out[4]:
+# ['file_01_001',
+#  'file_02_002',
+#  'file_03_003',
+#  'file_04_004',
+#  'file_01_005',
+#  'file_02_006',
+#  'file_03_007',
+#  'file_04_008']
+
+
+# file_list = os.listdir("~/home")
+
+# for filename in sorted(file_list, key = last_4chars):    
+#     with open(filename,'rb') as thefile:
+#         #Do stuff to each file
+
+
+
+
+
+
+
+
+
