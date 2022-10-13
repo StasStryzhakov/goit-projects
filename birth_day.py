@@ -9,7 +9,6 @@ employees_list = [{random.sample(names, k=1)[0]: datetime(random.randint(1970, 2
 def get_birthdays_per_week(employees_list: list):
     current_date = datetime.now()
     emploee_birthdays = {}
-    week_day = ''
     for employee in employees_list:
         for name, birthday in employee.items():
             birthday_date_in_this_year = birthday.replace(year=current_date.year)
