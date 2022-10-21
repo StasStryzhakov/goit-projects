@@ -1,10 +1,10 @@
 import shutil
 import sys
 from pathlib import Path
-import clean_folder.translate_name as translate_name # Модуль для перекладу назви файлу
+from clean_folder import translate_name # Модуль для перекладу назви файлу
 
 
-MAIN_PATH = sys.argv[1] # Основний шлях
+MAIN_PATH = sys.argv[1] if len(sys.argv) < 3 else ' '.join(sys.argv[1:]) # Основний шлях
 
 TRANSLATE = translate_name.get_translate_dict() # Словник для перекладу
 
@@ -101,11 +101,7 @@ def sort_files(folder_path): # функція яка сорту файли по 
                         file_path.unlink(missing_ok=True) 
                     else:
                         file_path.rename(file_new_folder_path)
-                      
-                       
-                    
-              
-            
+                             
                  
 def sort_by_dir(folder_path): # функція яка проходить рекурсивно по папкам
     sort_files(folder_path)
@@ -114,9 +110,11 @@ def sort_by_dir(folder_path): # функція яка проходить рек�
             sort_by_dir(path)
             remove_empty_dir(path)
                
-
-if __name__ == '__main__':
+def main():
     sort_by_dir(MAIN_PATH)
+    
+if __name__ == '__main__':
+    main()
  
     
     
