@@ -1,6 +1,3 @@
-import re
-
-
 CONTACTS = dict()
 
 def get_help(parameters=None):
