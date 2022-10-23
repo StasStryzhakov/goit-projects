@@ -29,13 +29,13 @@ def input_error(func):
 
             
         except KeyError:
-            print('This contact dosnt exist')
+            print('This contact doesnt exist, please try again.')
         except ValueError:
             print('Unknown command or parametrs, please try again.')
         except IndexError:
             print('index_error') 
         except TypeError:
-            print('type_error')            
+            print('Wrong Parameters, please try again.')            
                        
     return inner    
     
