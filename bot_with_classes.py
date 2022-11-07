@@ -4,13 +4,12 @@ class Field:
     pass
 
 class Name(Field):
-    def __init__(self, name: str):
-        self.name = name
+    def __init__(self, value: str):
+        self.value = value
 
 class Phone(Field):
-    def __init__(self, phone: str):
-        self.phone = phone
-
+    def __init__(self, value: str):
+        self.value = value
 class Record:
     
     def __init__(self, name: Name, phone=None):
@@ -34,5 +33,5 @@ class Record:
 
 class AdressBook(UserDict):
     def add_record(self, record: Record):
-        self.data[record.name] = record
+        self.data[record.name.value] = record
 
