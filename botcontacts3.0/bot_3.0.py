@@ -12,7 +12,9 @@ def get_help():
 >>> show all - show all existing contacts
 >>> delete phone - remove entered phone from contact Example: delete phone "name (only letters without spaces)" "phone number (only digits without spaces)"
 >>> delete - remove contact Example: delete "name (only letters without spaces)" 
->>> good bye/close/exit - bye bye\n'''
+>>> good bye/close/exit - bye bye
+>>> birthday - add birthday date to the contact Example: bithday name date(yyyy-mm-dd)
+>>> days to birthday - show how much days left to the contact birthday Example: days to birthday name\n'''
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -67,10 +69,9 @@ def show_contact_phone(data: str):
     return CONTACTS.search(data.strip()).get_info()
     
     
-
-
 def show_all_contacts():
-    result = [record.get_info() for record in CONTACTS.values()]
+    
+    result = [record.get_info() for page in  CONTACTS.iterator() for record in page]
     return '\n'.join(result)
     
 
@@ -86,6 +87,17 @@ def del_contact(data):
     CONTACTS.remove_record(data.strip())
     return 'Contact was deleted'
 
+def add_birth(data):
+    name, birthday = data.strip().split(' ')
+    record = CONTACTS[name]
+    record.add_birthday(birthday)
+    return f'For {name} you add Birthday {birthday}'
+    
+
+def days_to_birthday(data: str):
+    record = CONTACTS[data.strip()]
+    return record.day_to_bithday()
+
 COMMANDS = {'hello': greeting,
             'help': get_help,
             'add': add_contact,
@@ -96,20 +108,16 @@ COMMANDS = {'hello': greeting,
             'close': stop_bot,
             'exit': stop_bot,
             'delete phone': del_phone,
-            'delete': del_contact}
+            'delete': del_contact,
+            'birthday': add_birth,
+            'days to birthday': days_to_birthday}
 
 def break_func():
     return 'Wrong enter'
 
 def get_data_from_user(data: str):
     name, *phones = data.lower().strip().split(' ')
-    
-    if name.isnumeric():
-        raise ValueError('Wrong name')
-    
-    for phone in phones:
-        if not phone.isnumeric():
-            raise ValueError('Wrong phones')
+ 
     return name, phones
 
 def get_command(command):
@@ -135,15 +143,20 @@ def get_user_request(user_input: str):
     
 
 def main():
-    print(get_help())
-    while True:
+    try:
         
-        user_request = input('Wait for your command master: ')
-        result = get_user_request(user_request)
-        print(result)
-        
-        if result == 'Good bye!':
-            break
+        print(get_help())
+        while True:
+            
+            user_request = input('Wait for your command master: ')
+            result = get_user_request(user_request)
+            print(result)
+            
+            if result == 'Good bye!':
+                break
+    finally:
+        CONTACTS.save_to_file()
+    
         
         
                 
