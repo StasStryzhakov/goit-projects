@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABC
 import json
+import pickle
 
 class SerializationInterface(ABC):
     
@@ -14,7 +15,7 @@ class SerializationInterface(ABC):
     
     
     
-class SomeDict(SerializationInterface):
+class JsonSerialize(SerializationInterface):
     
     def save_data(self):
         with open('file.bin', 'wb') as fw:
@@ -24,5 +25,18 @@ class SomeDict(SerializationInterface):
         try:
             with open('file.bin', 'rb') as fr:
                 self.data = json.load(fr)
+        except FileNotFoundError:
+            pass
+        
+class PickleSerialize(SerializationInterface):
+    
+    def save_data(self):
+        with open('file.bin', 'wb') as fw:
+            pickle.dump(self.data, fw)
+    
+    def load_data(self):
+        try:
+            with open('file.bin', 'rb') as fr:
+                self.data = pickle.load(fr)
         except FileNotFoundError:
             pass
