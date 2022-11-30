@@ -1,20 +1,10 @@
 from AdressBook import AdressBook, Record
+from Message import *
 
 CONTACTS = AdressBook()
 
 def get_help():
-    return '''Command to execute: 
->>> hello
->>> help - show commands list
->>> add - add new contact in storage Example: add "name (only letters without spaces)" "phone number (only digits without spaces)"
->>> change - change existing contact Example: chnage "exist contact name (only letters without spaces)" "new phone number (only digits without spaces)"
->>> phone - show exist contact name and phone
->>> show all - show all existing contacts
->>> delete phone - remove entered phone from contact Example: delete phone "name (only letters without spaces)" "phone number (only digits without spaces)"
->>> delete - remove contact Example: delete "name (only letters without spaces)" 
->>> good bye/close/exit - bye bye
->>> birthday - add birthday date to the contact Example: bithday name date(yyyy-mm-dd)
->>> days to birthday - show how much days left to the contact birthday Example: days to birthday name\n'''
+    return HelpMessage.get_message()
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -34,10 +24,10 @@ def input_error(func):
     
 
 def greeting():
-    return 'How can I help you?'
+    return GreetingMessage.get_message()
 
 def stop_bot():
-    return 'Good bye!'
+    return StopMessage.get_message()
 
 def add_contact(data):
     
@@ -53,7 +43,7 @@ def add_contact(data):
         
     CONTACTS.add_record(record)
     
-    return f'contact {name} was added'
+    return AddContactMessage.get_message(name)
 
 
 def change_contact(data):
@@ -62,7 +52,7 @@ def change_contact(data):
     record = CONTACTS[name]
     record.change_phone(phones)
     
-    return 'Contact was updated'
+    return ChangeContacPhonetMessage.get_message(name)
 
 
 def show_contact_phone(data: str):
@@ -76,27 +66,30 @@ def show_all_contacts():
     
 
 def del_phone(data):
+    
     name, phone = data.strip().split(' ')
-
     record = CONTACTS[name]
-    if record.delete_phone(phone):
-        return f'Phone {phone} for {name} contact deleted.'
-    return f'{name} contact does not have this number'
+    return DeletePhoneMessage.get_message(record.delete_phone(phone), name, phone)
 
 def del_contact(data):
-    CONTACTS.remove_record(data.strip())
-    return 'Contact was deleted'
+    
+    name = data.strip()
+    CONTACTS.remove_record(name)
+    return DeleteContactMessage.get_message(name)
 
 def add_birth(data):
+    
     name, birthday = data.strip().split(' ')
     record = CONTACTS[name]
     record.add_birthday(birthday)
-    return f'For {name} you add Birthday {birthday}'
+    return AddContactBirthdayMessage.get_message(name, birthday)
     
 
 def days_to_birthday(data: str):
+    
     record = CONTACTS[data.strip()]
-    return record.day_to_bithday()
+    name = record.name.value
+    return  DaysToBirthdayMessage.get_message(name, record.day_to_bithday())
 
 COMMANDS = {'hello': greeting,
             'help': get_help,
