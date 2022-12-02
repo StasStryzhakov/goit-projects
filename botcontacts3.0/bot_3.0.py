@@ -1,5 +1,13 @@
 from AdressBook import AdressBook, Record
-from Message import *
+from Message import (AddContactMessage,
+                     AddContactBirthdayMessage,
+                     ChangeContacPhonetMessage,
+                     DaysToBirthdayMessage,
+                     DeleteContactMessage,
+                     DeletePhoneMessage,
+                     GreetingMessage,
+                     HelpMessage,
+                     StopMessage)
 
 CONTACTS = AdressBook()
 
