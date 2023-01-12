@@ -11,22 +11,26 @@ def timer(func):
         return result
     return inner
 
-
-def factorize(*number):
+@timer
+def factorize(*numbers):
     # YOUR CODE HERE
     result = []
-    for i in range(1, number+1):
-        if not (number % i):
-            result.append(i)
+    for number in numbers:
+        temp = []
+        for i in range(1, number+1):
+            if not (number % i):
+                temp.append(i)
+        result.append(temp)
+        
     return result
        
 cpu = cpu_count()
 
 
-with ProcessPoolExecutor(max_workers=cpu) as executor:
-    a, b, c, d  = list(executor.map(factorize, [128, 255, 99999, 10651060]))
+# with ProcessPoolExecutor(max_workers=cpu) as executor:
+#     a, b, c, d  = list(executor.map(factorize, [128, 255, 99999, 10651060]))
     
-# print(result)    
+a, b, c, d  = factorize(128, 255, 99999, 10651060)  
 # print(f'a: {a}', f'b: {b}', f'c: {c}', f'd: {d}', sep='\n')
 
 assert a == [1, 2, 4, 8, 16, 32, 64, 128]
